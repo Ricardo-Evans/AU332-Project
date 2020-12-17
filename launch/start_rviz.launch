@@ -1,0 +1,19 @@
+<launch>
+
+    <arg name="debug"/>
+    <arg name="arm"/>
+    <arg name="gripper"/>
+
+    <!-- Run Rviz and load the default config to see the state of the move_group node -->
+    <include file="$(find kortex_driver)/../kortex_move_it_config/$(arg arm)_move_it_config/launch/moveit_rviz.launch"
+             if="$(eval not arg('gripper'))">
+        <arg name="config" value="true"/>
+        <arg name="debug" value="$(arg debug)"/>
+    </include>
+
+    <include file="$(find kortex_driver)/../kortex_move_it_config/$(arg arm)_$(arg gripper)_move_it_config/launch/moveit_rviz.launch"
+             unless="$(eval not arg('gripper'))">
+        <arg name="config" value="true"/>
+        <arg name="debug" value="$(arg debug)"/>
+    </include>
+</launch>

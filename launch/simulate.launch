@@ -133,7 +133,11 @@
         </include>
 
         <!-- Start RViz -->
-        <node name="rviz" pkg="rviz" type="rviz" if="$(arg start_rviz)"/>
+        <include file="$(find main)/launch/start_rviz.launch" if="$(arg start_rviz)">
+            <arg name="debug" value="$(arg debug)"/>
+            <arg name="arm" value="$(arg arm)"/>
+            <arg name="gripper" value="$(arg gripper)"/>
+        </include>
 
         <!-- Without gripper -->
         <node name="urdf_spawner" pkg="gazebo_ros" type="spawn_model" respawn="false" output="screen"
