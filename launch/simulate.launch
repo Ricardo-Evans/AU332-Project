@@ -19,7 +19,7 @@
     <arg name="robot_name" default="my_$(arg arm)"/>
     <arg name="dof" default="7" if="$(eval arg('arm') == 'gen3')"/> <!-- Number of degrees of freedom of the arm -->
     <arg name="dof" default="6" if="$(eval arg('arm') == 'gen3_lite')"/> <!-- Number of degrees of freedom of the arm -->
-    <arg name="vision" default="false"/> <!-- True if the arm has a Vision module -->
+    <arg name="vision" default="true"/> <!-- True if the arm has a Vision module -->
     <arg name="sim" default="true"/>
     <arg name="prefix" default=""/>
     <arg name="cyclic_data_publish_rate" default="40"/> <!--Hz-->
@@ -120,13 +120,13 @@
         <!-- Start MoveIt main executable -->
         <!-- TODO Find cleaner way to do that and that will work with other arms -->
         <!-- Without gripper -->
-        <include file="$(find kortex_driver)/../kortex_move_it_config/$(arg arm)_move_it_config/launch/move_group.launch"
+        <include file="$(find kortex_description)/../kortex_move_it_config/$(arg arm)_move_it_config/launch/move_group.launch"
                  if="$(eval not arg('gripper'))">
             <arg name="dof" value="$(arg dof)"/>
             <arg name="prefix" value="$(arg prefix)"/>
         </include>
         <!-- With gripper -->
-        <include file="$(find kortex_driver)/../kortex_move_it_config/$(arg arm)_$(arg gripper)_move_it_config/launch/move_group.launch"
+        <include file="$(find kortex_description)/../kortex_move_it_config/$(arg arm)_$(arg gripper)_move_it_config/launch/move_group.launch"
                  unless="$(eval not arg('gripper'))">
             <arg name="dof" value="$(arg dof)"/>
             <arg name="prefix" value="$(arg prefix)"/>

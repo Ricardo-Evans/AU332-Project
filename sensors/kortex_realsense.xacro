@@ -3,6 +3,7 @@
 <robot xmlns:xacro="http://www.ros.org/wiki/xacro">
 
     <xacro:macro name="load_camera">
+        <!--
         <joint name="camera_sensor_joint" type="fixed">
             <axis xyz="0 0 0"/>
             <origin xyz="0 -0.055 -0.055" rpy="0 0 0"/>
@@ -24,12 +25,13 @@
             </inertial>
 
         </link>
+        -->
 
         <gazebo reference="camera_link">
-            <sensor type="camera" name="camera">
+            <sensor type="depth" name="camera">
                 <update_rate>30.0</update_rate>
                 <camera name="arm_camera">
-                    <pose>0 0 0 0 1.57 -1.57 0</pose>
+                    <pose>0 0 0 0 -1.57 1.57 0</pose>
                     <horizontal_fov>1.211269</horizontal_fov>
                     <vertical_fov>0.7417649</vertical_fov>
                     <image>
@@ -38,7 +40,7 @@
                         <format>R8G8B8</format>
                     </image>
                     <clip>
-                        <near>0.02</near>
+                        <near>0.001</near>
                         <far>300</far>
                     </clip>
                     <noise>
@@ -47,13 +49,16 @@
                         <stddev>0.007</stddev>
                     </noise>
                 </camera>
-                <plugin name="camera_controller" filename="libgazebo_ros_camera.so">
+                <plugin name="camera_controller" filename="libgazebo_ros_openni_kinect.so">
                     <alwaysOn>true</alwaysOn>
                     <updateRate>0.0</updateRate>
                     <cameraName>camera</cameraName>
-                    <imageTopicName>image_raw</imageTopicName>
-                    <cameraInfoTopicName>camera_info</cameraInfoTopicName>
-                    <frameName>camera_link</frameName>
+                    <imageTopicName>color/image_raw</imageTopicName>
+                    <cameraInfoTopicName>color/camera_info</cameraInfoTopicName>
+                    <depthImageTopicName>depth/image_raw</depthImageTopicName>
+                    <depthImageInfoTopicName>depth/camera_info</depthImageInfoTopicName>
+                    <pointCloudTopicName>depth/points</pointCloudTopicName>
+                    <frameName>/camera_link</frameName>
                     <hackBaseline>0.07</hackBaseline>
                     <distortionK1>0.0</distortionK1>
                     <distortionK2>0.0</distortionK2>

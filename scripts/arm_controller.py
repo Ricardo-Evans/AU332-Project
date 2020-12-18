@@ -118,14 +118,12 @@ class ArmController:
 
 def main():
     rospy.init_node("arm_controller")
-    rospy.delete_param("is_initialized")
     rospy.loginfo("initialize robot arm controller")
     arm_controller = ArmController()
     rospy.loginfo("reset faults of the robot arm")
     arm_controller.reset_faults()
     rospy.loginfo("move robot arm to home position")
     arm_controller.home()
-    rospy.set_param("is_initialized", True)
 
 
 if __name__ == '__main__':
